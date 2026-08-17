@@ -1,0 +1,27 @@
+# Compiled output
+target/
+*.class
+*.jar
+
+# Database files
+*.db
+*.sqlite
+
+# User data files
+users.json
+
+# IDE files
+.idea/
+*.iml
+.eclipse/
+.classpath
+.project
+.settings/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/

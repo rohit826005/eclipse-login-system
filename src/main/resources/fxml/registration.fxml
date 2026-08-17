@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.elililly.auth.ui.RegistrationController"
+      alignment="CENTER" spacing="15"
+      style="-fx-background-color: #f0f4f8;">
+    <padding><Insets top="40" right="50" bottom="40" left="50"/></padding>
+
+    <Label text="Create Account"
+           style="-fx-font-size: 20; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+
+    <TextField fx:id="usernameField" promptText="Username"
+               maxWidth="280" style="-fx-pref-height: 36;"/>
+    <TextField fx:id="emailField" promptText="Email"
+               maxWidth="280" style="-fx-pref-height: 36;"/>
+    <PasswordField fx:id="passwordField" promptText="Password"
+                   maxWidth="280" style="-fx-pref-height: 36;"/>
+    <PasswordField fx:id="confirmPasswordField" promptText="Confirm Password"
+                   maxWidth="280" style="-fx-pref-height: 36;"/>
+
+    <Label fx:id="messageLabel" wrapText="true" maxWidth="280"/>
+
+    <Button text="Register" onAction="#handleRegister" maxWidth="280"
+            style="-fx-pref-height: 36; -fx-background-color: #27ae60; -fx-text-fill: white; -fx-font-size: 14;"/>
+    <Button text="Cancel" onAction="#handleCancel" maxWidth="280"
+            style="-fx-pref-height: 36;"/>
+</VBox>
