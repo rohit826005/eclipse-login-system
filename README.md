@@ -73,4 +73,4 @@ src/main/java/com/elililly/auth/
 - BCrypt hashing with salt is applied at registration
 - All database operations use prepared statements
 - Session tokens are UUID-based and stored in memory only
-Custom Eclipse login system with file/database storage support
+- **Note**: The password recovery flow in this demo accepts any known username/email. Production deployments should add identity verification (e.g., email token, security question) before allowing password reset.

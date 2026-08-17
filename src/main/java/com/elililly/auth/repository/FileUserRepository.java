@@ -8,8 +8,16 @@ import com.google.gson.reflect.TypeToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.Reader;
+import java.io.Writer;
 import java.lang.reflect.Type;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -49,9 +57,7 @@ public class FileUserRepository implements UserRepository {
                 if (parent != null) {
                     parent.mkdirs();
                 }
-                try (Writer writer = new FileWriter(file)) {
-                    writer.write("[]");
-                }
+                Files.writeString(Paths.get(filePath), "[]", StandardCharsets.UTF_8);
                 logger.info("Created user storage file: {}", filePath);
             } catch (IOException e) {
                 logger.error("Could not create storage file: {}", e.getMessage());
@@ -60,7 +66,7 @@ public class FileUserRepository implements UserRepository {
     }
 
     private List<User> loadAll() {
-        try (Reader reader = new FileReader(filePath)) {
+        try (Reader reader = Files.newBufferedReader(Paths.get(filePath), StandardCharsets.UTF_8)) {
             Type listType = new TypeToken<List<User>>() {}.getType();
             List<User> users = gson.fromJson(reader, listType);
             return users != null ? users : new ArrayList<>();
@@ -71,10 +77,18 @@ public class FileUserRepository implements UserRepository {
     }
 
     private void saveAll(List<User> users) {
-        try (Writer writer = new FileWriter(filePath)) {
+        Path target = Paths.get(filePath);
+        Path temp = Paths.get(filePath + ".tmp");
+        try (Writer writer = Files.newBufferedWriter(temp, StandardCharsets.UTF_8)) {
             gson.toJson(users, writer);
         } catch (IOException e) {
             logger.error("Error writing user file: {}", e.getMessage());
+            return;
+        }
+        try {
+            Files.move(temp, target, StandardCopyOption.ATOMIC_MOVE, StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e) {
+            logger.error("Error replacing user file: {}", e.getMessage());
         }
     }
 

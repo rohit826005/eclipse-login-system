@@ -30,7 +30,7 @@ public class AuthenticationService {
     private final int minPasswordLength;
 
     // In-memory session store: sessionToken -> userId
-    private final Map<String, String> activeSessions = new HashMap<>();
+    private final Map<String, String> activeSessions = new java.util.concurrent.ConcurrentHashMap<>();
 
     public AuthenticationService(UserRepository userRepository) {
         this.userRepository = userRepository;

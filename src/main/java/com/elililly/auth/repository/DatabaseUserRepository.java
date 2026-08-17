@@ -153,7 +153,7 @@ public class DatabaseUserRepository implements UserRepository {
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, username);
             try (ResultSet rs = ps.executeQuery()) {
-                return rs.getInt(1) > 0;
+                return rs.next() && rs.getInt(1) > 0;
             }
         } catch (SQLException e) {
             logger.error("Error checking username existence: {}", e.getMessage());
@@ -168,7 +168,7 @@ public class DatabaseUserRepository implements UserRepository {
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, email);
             try (ResultSet rs = ps.executeQuery()) {
-                return rs.getInt(1) > 0;
+                return rs.next() && rs.getInt(1) > 0;
             }
         } catch (SQLException e) {
             logger.error("Error checking email existence: {}", e.getMessage());
